@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Product {{ product.name }}{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <h1>Product {{ product.name }}</h1>
+
+    <p>Price: {{product.price}} $</p>
+    <form method="get" action="{% url 'add_to_cart' product.id %}">
+        <button>Add to card</button>
+    </form>
+
+</div>
+{% endblock main %}

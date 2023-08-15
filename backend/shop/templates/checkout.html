@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock title %}
+{% block script %}
+<script>
+    // $(document).ready(function() {
+    function test_fetch2(){
+        $.ajax({
+            type: "POST",
+            url: "/ok/",
+            headers: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            data: {
+              "id": 78912,
+              "customer": "Jason Sweet",
+              "post_data": "TEST DATA",
+              
+            },
+            success: function (result) {
+               console.log(result);
+            },
+            dataType: "json"
+          })
+        }
+        // })
+        </script>
+{% endblock script %}
+
+{% block main %}
+<div class="container">
+    <h1>Purchase</h1>
+    <p>Customer: {{user}}</a></p>
+
+    <ul>
+        {% if items %}
+        {% for item in items %}
+            <li>{{ item.product.name }}, {{ item.quantity }} item, {{ item.product.price }} $</li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+    <p>Total price: {{total_price.sum}} $</a></p>
+
+    <!-- Replace "test" with your own sandbox Business account app client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AW6IwpqUhzQINbvywondFrAoODmn1ciJDMSVh7gB7XEeHQR4J8bh6wpny8jO-W26r8Xp2fnvpNvFlw4I&currency=USD"></script>
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+    <button onclick="test_fetch()">Click me</button>
+    <script>
+        const csrf = '{{ csrf_token }}'
+        console.log(csrf)
+        function test_fetch(){
+            fetch('/ok/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrf,
+                },
+                body: JSON.stringify({'post_data':'Data to post'})
+            }).then(function(res) {
+                return console.log(res)
+            })
+        }
+    
+      paypal
+        .Buttons({
+          // Sets up the transaction when a payment button is clicked
+          createOrder: function(data, actions) {
+            return fetch('/payment/', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrf,
+                },
+                body: JSON.stringify(data)
+            }).then(function(res) {
+                return res.json();
+            }).then(function(orderData) {
+                return orderData.id;
+            });
+        },
+          // Finalize the transaction after payer approval
+          onApprove: function(data, actions) {
+            return fetch('/capture/' + data.orderID, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrf,
+                },
+                body: JSON.stringify(data)
+            }).then(function(res) {
+                return res.json();
+            }).then(function(orderData) {
+                // Three cases to handle:
+                //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                //   (2) Other non-recoverable errors -> Show a failure message
+                //   (3) Successful transaction -> Show confirmation or thank you
+
+                // This example reads a v2/checkout/orders capture response, propagated from the server
+                // You could use a different API or structure for your 'orderData'
+                var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+                if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+                    return actions.restart(); // Recoverable state, per:
+                    // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+                }
+
+                if (errorDetail) {
+                    var msg = 'Sorry, your transaction could not be processed.';
+                    if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+                    if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+                    return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+                }
+
+                // Successful capture! For demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                // Replace the above to show a success message within this page, e.g.
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '';
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+                actions.redirect(`http://127.0.0.1:8000/sucsess_payment/${orderData.id}`);
+                //window.location.href = 'thank_you.html';
+            });
+        }
+        })
+        .render("#paypal-button-container");
+    </script>
+    
+
+
+</div>
+{% endblock main %}

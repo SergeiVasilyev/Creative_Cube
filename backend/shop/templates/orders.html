@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock title %}
+{% block script %}{% endblock script %}
+
+{% block main %}
+<div class="container">
+    <h1>Orders</h1>
+    {% for order in orders %}
+        <h4>Order id: {{ order.transaction_id }}</h4>
+        {% for item in order.items.all %}
+        <p>{{ item.product.id }} {{ item.product.name }} --- {{ item.quantity }} = {{ item.sub_total }}</p>
+        {% endfor %}
+    {% endfor %}
+    <button onclick="sp()">Click me</button>
+</div>
+{% endblock main %}

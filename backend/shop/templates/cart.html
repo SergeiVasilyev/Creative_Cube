@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <h1>Cart</h1>
+    <p>Customer: {{user}}</a></p>
+    
+
+    <ul>
+        {% if cart_items %}
+        {% for item in cart_items %}
+            <li>{{ item.product }}, {{ item.quantity }} item, {{ item.subtotal }} $</li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    <p>Total price: {{total_price}} $</a></p>
+
+    <p><a href="{% url 'clear_cart' %}">Clear cart</a></p>
+
+    <form method="post" action="{% url 'cart' %}">
+        {% csrf_token %}
+        <button>Checkout</button>
+    </form>
+
+</div>
+{% endblock main %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}404{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <h1>Ooops!</h1>
+    <h2>I cannot find the file you requested!</h2>
+    <a href="{% url 'main' %}">Go to main page</a>
+</div>
+{% endblock main %}

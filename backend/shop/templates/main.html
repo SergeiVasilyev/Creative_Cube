@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <h1>Main page</h1>
+    <a href="{% url 'products' %}">products</a>
+    <p><a href="{% url 'cart' %}">Show cart</a></p>
+</div>
+{% endblock main %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sucsess{% endblock title %}
+{% block script %}
+
+{% endblock script %}
+
+{% block main %}
+<div class="container">
+    <h1>Congratulations on a successful purchase!</h1>
+    <h3>Order id: {{ order.transaction_id }}</h3>
+    {% for item in order.items.all %}
+    <p>{{ item.product.id }} {{ item.product.name }} --- {{ item.quantity }} = {{ item.sub_total }}</p>
+    {% endfor %}
+    <button onclick="sp()">Click me</button>
+</div>
+<script>
+    function sp() {
+        window.location.href = 'http://127.0.0.1:8000/sucsess_payment/'
+    }
+</script>
+{% endblock main %}

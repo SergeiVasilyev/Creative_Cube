@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create products{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <h1>Create products</h1>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="p_name">product name</label><br>
+        <input id="p_name" type="text" name="p_name">
+        <br><br>
+        <label for="price">price</label><br>
+        <input id="price" type="number" name="price">
+        <br><br>
+        <label for="quantity">quantity</label><br>
+        <input id="quantity" type="number" name="quantity">
+        <br><br>
+
+        <input type="file" name="images" multiple>
+        <button>Upload</button>
+    </form>
+    <hr>
+    
+
+</div>
+{% endblock main %}
