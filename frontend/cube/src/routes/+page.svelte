@@ -3,6 +3,7 @@
     import Mygallery from "../components/mygallery.svelte"
     /** @type {import('./$types').PageData} */
     export let data
+    let path_to_product = '/product/'
 
 </script>
 
@@ -15,7 +16,7 @@
     <div class="gallary_wrap">
         <Mygallery img_height='30vw' products={data.results} />
     </div>
-    <h1 class="pt-9 ml-8">Our Products</h1>
+    <h1 class="pt-9">Our Products</h1>
     <div class="cat">
         {#each data.results as product}
             <Card header={product.name} 
@@ -23,7 +24,8 @@
                 price={product.price} 
                 src={product.images[0] ? product.images[0].img_name : ''} 
                 product_id={product.id} 
-                product_slug={product.slug}/>
+                product_slug={product.slug}
+                path_to_product={path_to_product}/>
         {/each}
     </div>
 </div>
@@ -37,6 +39,9 @@
         margin: 0 auto;
         padding: 0 2rem;
         max-width: 90%;
+    }
+    h1 {
+        margin-left: 2rem;
     }
     .cat {
         display: grid;
