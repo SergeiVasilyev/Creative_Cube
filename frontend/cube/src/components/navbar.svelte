@@ -13,7 +13,6 @@
       <a href={'/products'} class="nav-link text-2xl mb-2 md:mr-9 hover:text-emerald-600">Products</a>
       <a href={'/about'} class="nav-link text-2xl mb-2 md:mr-9 hover:text-emerald-600">About</a>
       <a href={'/settings'} class="nav-link text-2xl mb-2 md:mr-9 hover:text-emerald-600">Settings</a>
-      <a href={'/card'} class="nav-link text-2xl mb-2 md:mr-9 hover:text-emerald-600">Card</a>
     </nav>
 
     <button class="show-nav text-3xl cursor-pointer" bind:this="{show_nav}">
