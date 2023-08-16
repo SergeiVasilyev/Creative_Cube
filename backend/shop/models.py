@@ -123,6 +123,8 @@ class ProductManager(models.Manager):
 
 # TODO Cange all price fields to Integer cents
 class Product(models.Model):
+    class Meta:
+        ordering = ['id']
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
