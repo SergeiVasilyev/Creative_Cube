@@ -6,7 +6,9 @@
 
 </script>
 
-
+<svelte:head>
+  <title>Creative Box</title>
+</svelte:head>
 
 <div class="container">
     <h1 class="mb-4 mt-5">Last products</h1>

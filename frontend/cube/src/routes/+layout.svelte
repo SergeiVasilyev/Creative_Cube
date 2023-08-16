@@ -5,9 +5,7 @@
   
 </script>
 
-<svelte:head>
-  <title>{$page.data.title}</title>
-</svelte:head>
+
 
 <Navbar />
 
