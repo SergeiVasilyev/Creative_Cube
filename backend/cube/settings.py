@@ -170,6 +170,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 # https://github.com/respondcreate/django-versatileimagefield/issues/11
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
