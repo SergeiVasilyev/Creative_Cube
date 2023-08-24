@@ -66,7 +66,7 @@
         {#each products as product, index}
             <div class="mySlides" bind:this={slides[index]}>
                 <div class="numbertext">{index+1} / {products.length}</div>
-                <img src="{product}" alt="{product}" style="height:{img_height}">
+                <img src="http://127.0.0.1:8000/{product}" alt="{product}" style="height:{img_height}">
                 <!-- <div class="text">{product.name}</div> -->
             </div>
         {/each}
