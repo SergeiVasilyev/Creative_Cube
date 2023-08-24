@@ -59,6 +59,10 @@ class ProductsViewSet(viewsets.ModelViewSet): # viewsets.ReadOnlyModelViewSet - 
         item = get_object_or_404(self.queryset, slug=slug)
         serializer = ProductsSerializer(item)
         return Response(serializer.data)
+    # When try to get a one product by slug, image url not contain domain name
+    # django rest framework retrieve get full path from db
+    # https://github.com/respondcreate/django-versatileimagefield/issues/11
+    # TODO Make sure that it works with nginx
 
 
 
