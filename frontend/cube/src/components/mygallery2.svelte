@@ -6,6 +6,7 @@
 	 */
     export let products = []
     export let img_height = '50vh'
+    export let img_width = '100%'
 
 
     /**
@@ -62,7 +63,7 @@
 </script>
 
 <slot name="slideshow-container">
-    <div class="slideshow-container" style="height:{img_height}">
+    <div class="slideshow-container" style="height:{img_height}; width:{img_width};">
         {#each products as product, index}
             <div class="mySlides" bind:this={slides[index]}>
                 <div class="numbertext">{index+1} / {products.length}</div>
@@ -96,7 +97,8 @@
 
     .slideshow-container {
         position: relative;
-        margin: auto;
+        /* margin: auto; */
+        /* border: 1px solid red; */
     }
 
     .mySlides {
