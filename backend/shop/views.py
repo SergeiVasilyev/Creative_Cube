@@ -274,13 +274,15 @@ def create_product(request):
         images = request.FILES.getlist('images')
         product_name = request.POST.get('p_name')
         price = request.POST.get('price')
+        description = request.POST.get('description')
         quantity = request.POST.get('quantity')
         slug = create_slug(product_name)
         date_added = datetime_now()
 
-        product = Product.objects.create(name=product_name, 
-                                         price=price, 
-                                         quantity=quantity, 
+        product = Product.objects.create(name=product_name,
+                                         description=description,
+                                         price=price,
+                                         quantity=quantity,
                                          slug=slug, 
                                          date_added=date_added)
         for image in images:
