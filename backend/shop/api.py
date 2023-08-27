@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .serializers import ProductsSerializer, UserSerializer, GroupSerializer
 from .models import Product, Category
 from rest_framework.decorators import action
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions, generics, authentication
 from .models import *
 from django.contrib.auth.models import User, Group
 from django.shortcuts import get_object_or_404
@@ -19,6 +19,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
 
 
 # class ProductsViewSet(viewsets.ModelViewSet): # viewsets.ReadOnlyModelViewSet - Can just read db

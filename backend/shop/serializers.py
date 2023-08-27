@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import ShoppingSession, Product, Order, OrderItem, Image
+from .models import ShoppingSession, Product, Order, OrderItem, Image, CustomUser
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
+        model = CustomUser
+        fields = ['url', 'first_name', 'last_name', 'username', 'email', 'groups', 'is_seller', 'phone_number', 'address', 'postal_code']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
