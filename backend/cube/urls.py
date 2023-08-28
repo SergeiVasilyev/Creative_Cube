@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from django.urls import include, path
+from django.urls import include, path, re_path
 from shop.views import *
 from shop import views
 from django.contrib.auth.models import User
@@ -41,10 +41,11 @@ urlpatterns = [
     path('add_to_cart/<int:idx>/', AddToCartView.as_view(), name="add_to_cart"),
     path('clear_cart/', clear_cart, name="clear_cart"),
     path('checkout/', CheckoutView.as_view(), name="checkout"),
-    path('login/', LoginView.as_view(), name="login"),
 
-    path('register/', RegisterView.as_view(), name="register"),
-    path('logout/', LogoutView.as_view(), name="logout"),
+    # Django AUTHENTICATION URLS (LOGIN, REGISTER, LOGOUT)
+    path('login/', LoginView.as_view(), name="login_view"),
+    path('register/', RegisterView.as_view(), name="register_view"),
+    path('logout/', LogoutView.as_view(), name="logout_view"),
 
     path('sucsess/', sucsess, name="sucsess"),
     path('payment/', payment, name="payment"),
@@ -61,16 +62,10 @@ urlpatterns = [
 
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api/auth/', LoginView.as_view(), name='login'),
-    # path('api/', include(router.urls)),
     path('gallery/', gallery, name="gallery"),
 
-    # path('api/posts/', Post_articleAPIView2.as_view({'get': 'list'})),
-    # path('api/posts/<int:pk>/', Post_articleViewSet.as_view({'put': 'update'})),
-    
-    # path('api/posts/', Post_articleAPIView2.as_view()),
-    # path('api/posts/<int:pk>/', Post_articleAPIUpdate.as_view()),
-    # path('api/posts_detail/<int:pk>/', Post_articleAPIDetailView.as_view()),
-    # path('api/posts2/', Post_articleAPIView2.as_view()),
+    # DJOSER AUTHENTICATION URLS (LOGIN, REGISTER, LOGOUT)
+    re_path(r'^api/auth/', include('djoser.urls')),
+    re_path(r'^api/auth/', include('djoser.urls.authtoken')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
