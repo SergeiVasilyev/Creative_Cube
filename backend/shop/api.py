@@ -21,34 +21,10 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-
-
-# class ProductsViewSet(viewsets.ModelViewSet): # viewsets.ReadOnlyModelViewSet - Can just read db
-#     # queryset = Post_article.objects.all() # basename='post_article' - need if we don't use in Post_articleViewSet queryset variable
-#     queryset = Product.objects.all()
-#     serializer_class = ProductsSerializer
-
-#     def get_queryset(self):
-#         pk = self.kwargs.get('pk')
-#         print(self.kwargs)
-#         if not pk:
-#             return Product.objects.all()
-        
-#         return Product.objects.get(pk=pk)
-
-#     # @action(methods=['get'], detail=False) # detail=False means a list of records
-#     # def category(self, request):
-#     #     cats = Category.objects.all()
-#     #     return Response({'cats': [c.cat_name for c in cats]})
-    
-#     @action(methods=['get'], detail=True) # detail=False means a list of records
-#     def category(self, request, pk=None):
-#         cats = Category.objects.get(pk=pk)
-#         return Response({'cats': cats.cat_name})
-    
-
 class ProductsViewSet(viewsets.ModelViewSet): # viewsets.ReadOnlyModelViewSet - Can just read db
     serializer_class = ProductsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
     queryset = Product.objects.all()
     lookup_field = 'slug'
     # print(queryset.values())
